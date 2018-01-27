@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MathGameActivity" />
+        <activity android:name=".NumberGameActivity" />
+        <activity android:name=".MathModeSelectActivity" />
+        <activity android:name=".NunModeSelectActivity"></activity>
     </application>
 
 </manifest>

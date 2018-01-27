@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mathItem1"
+        android:title="1 Player" />
+    <item
+        android:id="@+id/mathItem2"
+        android:title="2 Players Basic" />
+    <item
+        android:id="@+id/mathItem3"
+        android:title="2 Players Cutthroat" />
+</menu>
