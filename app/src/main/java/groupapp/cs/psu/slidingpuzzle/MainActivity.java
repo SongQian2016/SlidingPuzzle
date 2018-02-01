@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             private void openMathGameSelection() {
-                Intent intent = new Intent(MainActivity.this, MathModeSelectActivity.class);
+                Intent intent = new Intent(MainActivity.this, MathModeLogin.class);
                 startActivity(intent);
             }
         });
