@@ -20,7 +20,11 @@
         <activity android:name=".NumberGameActivity" />
         <activity android:name=".MathModeSelectActivity" />
         <activity android:name=".NunModeSelectActivity" />
-        <activity android:name=".MathModeLogin"></activity>
+        <activity android:name=".MathModeLogin"/>
+        <activity android:name=".Math1playerActivity" />
+        <activity android:name=".Math2playersActivity" />
+        <activity android:name=".MathCutthroughActivity" />
+        <activity android:name=".NumberGameAIActivity" ></activity>
     </application>
 
 </manifest>

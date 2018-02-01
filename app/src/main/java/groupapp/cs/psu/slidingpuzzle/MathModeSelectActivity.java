@@ -18,9 +18,9 @@ public class MathModeSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math_mode_select);
 
+        //Receiving and displaying the user name input by the user in the MathModeLogin activity.
         Intent intent = getIntent();
         String message = intent.getStringExtra(MathModeLogin.EXTRA_MESSAGE);
-
         TextView textView = findViewById(R.id.userGreeting);
         textView.setText("Welcome " + message +"!");
 
