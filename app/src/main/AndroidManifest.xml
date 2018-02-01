@@ -19,7 +19,8 @@
         <activity android:name=".MathGameActivity" />
         <activity android:name=".NumberGameActivity" />
         <activity android:name=".MathModeSelectActivity" />
-        <activity android:name=".NunModeSelectActivity"></activity>
+        <activity android:name=".NunModeSelectActivity" />
+        <activity android:name=".MathModeLogin"></activity>
     </application>
 
 </manifest>
