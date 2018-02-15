@@ -40,7 +40,7 @@ public class MathModeSelectActivity extends AppCompatActivity {
 
          switch (item.getItemId()) {
              case R.id.mathItem1:
-                 Intent intent3 = new Intent(MathModeSelectActivity.this, Math1playerActivity.class);
+                 Intent intent3 = new Intent(MathModeSelectActivity.this, DisplayGridActivity.class);
                  this.startActivity(intent3);
                  break;
 
