@@ -5,82 +5,78 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class NumberGameActivity extends AppCompatActivity {
     //store 1-24 numbers in the button array whose index is from 0-23
-    int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
-    public Button tiles[];
-    public Button startBtn;
+    //int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
+    public List<Integer> nums = new ArrayList<>();
+    public Button tiles[] = new Button[25];
+    public Button startB;
+    public List<String> tileList = new ArrayList<String>(nums.size());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_game);
 
-        startBtn = (Button) findViewById(R.id.startButton);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
+        for (int i = 1; i <= 24; i++) {
+            nums.add(i);
+        }
+
+        startB = (Button) findViewById(R.id.startBt2);
+
+        startB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                genNewGame();
-            }
+                Collections.shuffle(nums);
 
-            String btnText[];
-
-            private void genNewGame() {
-                randShuffle(nums);
-
-                if (!isSolvable(nums)) {
-                    randShuffle(nums);
-                } else {
-
-                    for (int i = 0; i < nums.length; ++i) {
-                        btnText[i] = Integer.toString(nums[i]);
-                        String buttonID = "button" + i;
-                        int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                        tiles[i] = findViewById(resID);
-                        tiles[i].setText(btnText[i]);
-                    }
+                while (!isSolvable(nums)) {
+                    Collections.shuffle(nums);
+                }
+                //Log.d("Number generated.");
+                for (int i = 0; i < nums.size(); ++i) {
+                    tileList.add(String.valueOf((nums.get(i))));
+                    String btnID = "button" + i;
+                    int resID = getResources().getIdentifier(btnID, "id", getPackageName());
+                    tiles[i] = (Button) findViewById(resID);
+                    tiles[i].setText(tileList.get(i));
 
                 }
+                //tiles[24].setText("");
             }
         });
-
-    }
-    //to generate a solvable board, we first randomly shuffle the array, then check if it is solvable,
-    //if no, reshuffle. if yes, assign them to button text.
-
-    public void randShuffle(int[] A) {
-        for (int i = 0; i < A.length; ++i) {
-            int index = (int) (Math.random() * A.length);
-            int temp = A[i];
-            A[i] = A[index];
-            A[index] = temp;
-        }
+        // playNumGame();
     }
 
-    int inversions = 0;
+    private int inversions = 0;
 
-    public int inversionCounter(int[] A) {
+    private int inversionCounter(List<Integer> A) {
 
-        for (int i = 0; i < A.length - 1; ++i) {
-            for (int j = i + 1; j < A.length; ++j) {
-                if (A[i] > A[j]) {
+        for (int i = 0; i < A.size() - 1; ++i) {
+            for (int j = i + 1; j < A.size(); ++j) {
+                if (A.get(i) > A.get(j)) {
                     inversions += 1;
                 }
             }
         }
         return inversions;
     }
+
     //If the grid width is odd, then the number of inversions in a solvable situation is even.
 
-    public boolean isSolvable(int[] A) {
-
+    private boolean isSolvable(List<Integer> A) {
         if (inversionCounter(A) % 2 != 0) {
             return false;
         }
         return true;
     }
+
 
 }
 

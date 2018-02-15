@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/item1"
-        android:title="Play alone" />
+        android:title="Play with computer" />
     <item
         android:id="@+id/item2"
-        android:title="Play with computer" />
+        android:title="Play alone" />
 </menu>
