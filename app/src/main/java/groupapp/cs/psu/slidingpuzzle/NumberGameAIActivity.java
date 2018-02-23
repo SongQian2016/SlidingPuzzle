@@ -30,6 +30,8 @@ public class NumberGameAIActivity extends AppCompatActivity {
     public ToggleButton pauseBtn;
     private TextView tv_time;
 
+    private float dX, dY;
+
     private boolean ispaused = false;
     private boolean mstarted;
 
@@ -46,16 +48,6 @@ public class NumberGameAIActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_game_ai);
-
-        init();
-
-    }
-
-    public void init() {
-
-        for (int i = 1; i <= 24; i++) {
-            numArray.add(i);
-        }
         startBtn = (Button) findViewById(R.id.startBt);
 
 
@@ -82,26 +74,7 @@ public class NumberGameAIActivity extends AppCompatActivity {
                 //genNewGame();
                 starttimer();
 
-                Collections.shuffle(numArray);
 
-                while (!isSolvable(numArray)) {
-                    Collections.shuffle(numArray);
-                }
-                //Log.d("Number generated.");
-                for (int i = 0; i < numArray.size(); ++i) {
-                    textList.add(String.valueOf((numArray.get(i))));
-                    String textID = "textView" + i;
-                    int resID = getResources().getIdentifier(textID, "id", getPackageName());
-                    tvs[i] = (TextView) findViewById(resID);
-                    tvs[i].setText(textList.get(i));
-                  //  tvs[i].setOnTouchListener(onTouchListener);
-                    // tvs[i].setOnDragListener(dragListener);
-
-                   /* if (tvs[i].getText() != null &&
-                            (tvs[i+1] == null || tvs[i-1] == null || tvs[i+5] == null || tvs[i-5] ==null)){
-                        tvs[i].setOnTouchListener(onTouchListener);
-                    }*/
-                }
             }
         });
 
@@ -115,8 +88,10 @@ public class NumberGameAIActivity extends AppCompatActivity {
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                pausetimer();
+                tv_time.setText("00:00:00");
                 openMenu();
+                //pausetimer();
             }
 
             private void openMenu() {
@@ -125,7 +100,62 @@ public class NumberGameAIActivity extends AppCompatActivity {
             }
         });
 
+        init();
+        
+
     }
+
+    public void init() {
+
+        for (int i = 1; i <= 24; i++) {
+            numArray.add(i);
+        }
+        Collections.shuffle(numArray);
+
+        while (!isSolvable(numArray)) {
+            Collections.shuffle(numArray);
+        }
+        //Log.d("Number generated.");
+        for (int i = 0; i < numArray.size(); ++i) {
+            textList.add(String.valueOf((numArray.get(i))));
+            String textID = "textView" + i;
+            int resID = getResources().getIdentifier(textID, "id", getPackageName());
+            tvs[i] = (TextView) findViewById(resID);
+            tvs[i].setText(textList.get(i));
+            tvs[i].setOnTouchListener(onTouchListener);
+            //tvs[i].setOnClickListener(onClickListener);
+
+
+        }
+
+    }
+
+    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    dX = v.getX() - event.getRawX();
+                    dY = v.getY() - event.getRawY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    v.animate()
+                            .x(event.getRawX() + dX - (v.getWidth()/2))
+                            .y(event.getRawY() + dY - (v.getHeight()/2))
+                            .setDuration(0)
+                            .start();
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+
+        }
+
+    };
+
 
     int inversions = 0;
 
@@ -149,24 +179,6 @@ public class NumberGameAIActivity extends AppCompatActivity {
         }
         return true;
     }
-
-   // View.OnTouchListener onTouchListener = new View.OnTouchListener(){
-
-        public boolean onTouchEvent(MotionEvent event) {
-            //if (v.getId() == R.id.textView23) {
-            //  tvs[24].setText("00");
-            //}
-
-            float x = event.getX();
-            float y = event.getY();
-
-            if (event.getAction() == MotionEvent.ACTION_MOVE){
-                tvs[24].setX(x);
-                tvs[24].setY(y);
-            }
-
-            return true;
-        }
 
 
     private void starttimer() {
@@ -212,6 +224,7 @@ public class NumberGameAIActivity extends AppCompatActivity {
     };
 
 }
+
 
 
 

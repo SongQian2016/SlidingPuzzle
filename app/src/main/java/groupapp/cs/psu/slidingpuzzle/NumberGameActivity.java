@@ -2,21 +2,21 @@ package groupapp.cs.psu.slidingpuzzle;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class NumberGameActivity extends AppCompatActivity {
-    //store 1-24 numbers in the button array whose index is from 0-23
-    //int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
-    public List<Integer> nums = new ArrayList<>();
-    public Button tiles[] = new Button[25];
-    public Button startB;
-    public List<String> tileList = new ArrayList<String>(nums.size());
 
+
+    public List<Integer> nums = new ArrayList<>();
+    //public Button tiles[] = new Button[25];
+   // public Button startB;
+
+
+
+    //private String[] tileList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,8 @@ public class NumberGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_number_game);
 
 
-        for (int i = 1; i <= 24; i++) {
+
+   /*     for (int i = 1; i <= 24; i++) {
             nums.add(i);
         }
 
@@ -51,9 +52,30 @@ public class NumberGameActivity extends AppCompatActivity {
                 //tiles[24].setText("");
             }
         });
-        // playNumGame();
+        */
     }
 
+    private void genSolvableOrder() {
+
+        Collections.shuffle(nums);
+
+        while (!isSolvable(nums)) {
+            Collections.shuffle(nums);
+        }
+        //Log.d("Number generated.");
+        for (int i = 0; i < nums.size(); ++i) {
+
+
+        }
+
+    }
+
+
+
+
+
+
+    //code below not useful temperily
     private int inversions = 0;
 
     private int inversionCounter(List<Integer> A) {

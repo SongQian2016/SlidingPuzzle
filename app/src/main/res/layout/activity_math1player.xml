@@ -7,19 +7,4 @@
     android:layout_height="match_parent"
     tools:context="groupapp.cs.psu.slidingpuzzle.Math1playerActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="356dp"
-        android:layout_marginEnd="153dp"
-        android:layout_marginStart="173dp"
-        android:layout_marginTop="137dp"
-        android:bufferType="editable"
-        android:clickable="true"
-        android:text="1player"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
