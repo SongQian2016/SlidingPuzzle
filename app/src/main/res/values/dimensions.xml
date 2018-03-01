@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="button_margin">5dp</dimen>
+    <dimen name="Padding">10dp</dimen>
+    <dimen name="Margin">3dp</dimen>
+    <dimen name="LayoutWidth">200dp</dimen>
+    <dimen name="buttonHeight">40dp</dimen>
+    <dimen name="textViewSize">30dp</dimen>
+    <dimen name="textButton">40sp</dimen>
+    <dimen name="marginBotton">10dp</dimen>
+    <dimen name="buttonWidth">85dp</dimen>
+    <dimen name="textScore24">25sp</dimen>
+    <dimen name="textBestScore24">20sp</dimen>
+    <dimen name="buttonSize24">60dp</dimen>
+    <dimen name="timerButtonSize">35dp</dimen>
+
+
+</resources>
