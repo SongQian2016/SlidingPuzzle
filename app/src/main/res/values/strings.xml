@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Sliding Puzzle</string>
     <string name="password">password</string>
+    <string name="newGame">Restart</string>
+    <string name="continueGame">Сontinue</string>
+    <string name="MainMenu"><b>Home</b></string>
+    <string name="Steps">Steps: </string>
+    <string name="bestScore">History: </string>
+    <string name="you_won">Congratulations!</string>
+    <string name="button">button</string>
+    <string name="notSave">Saving missing! Press restart.</string>
+    <string name="action_settings">Settings</string>
 </resources>
