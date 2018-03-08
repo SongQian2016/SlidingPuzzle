@@ -8,6 +8,8 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -19,13 +21,13 @@ import java.util.List;
 
 public class NumberGameAIActivity extends AppCompatActivity {
 
-    //int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
-
+    private static final int N = 5;
     public Button startBtn, exitBtn;
     public List numArray = new ArrayList<>();
     public TextView[] tvs = new TextView[25];
     public TextView temp;
     public List<String> textList = new ArrayList<String>(numArray.size());
+    public int[][] board = new int [N][N];
 
     public ToggleButton pauseBtn;
     private TextView tv_time;
@@ -48,9 +50,8 @@ public class NumberGameAIActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_game_ai);
+
         startBtn = (Button) findViewById(R.id.startBt);
-
-
         tv_time = (TextView) findViewById(R.id.tv_time);
         startBtn = (Button) findViewById(R.id.startBt);
         exitBtn = (Button) findViewById(R.id.exitBt);
@@ -71,9 +72,10 @@ public class NumberGameAIActivity extends AppCompatActivity {
                 exitBtn.setEnabled(true);
 
                 ispaused=false;
-                //genNewGame();
-                starttimer();
 
+                starttimer();
+                init();
+               // playStart();
 
             }
         });
@@ -91,7 +93,6 @@ public class NumberGameAIActivity extends AppCompatActivity {
                 pausetimer();
                 tv_time.setText("00:00:00");
                 openMenu();
-                //pausetimer();
             }
 
             private void openMenu() {
@@ -100,8 +101,8 @@ public class NumberGameAIActivity extends AppCompatActivity {
             }
         });
 
-        init();
-        
+        checkResult();
+        showGameOver();
 
     }
 
@@ -123,12 +124,63 @@ public class NumberGameAIActivity extends AppCompatActivity {
             tvs[i] = (TextView) findViewById(resID);
             tvs[i].setText(textList.get(i));
             tvs[i].setOnTouchListener(onTouchListener);
-            //tvs[i].setOnClickListener(onClickListener);
+    /*        tvs[i].setOnClickListener(new View.OnClickListener() {
 
+                @Override
+                public void onClick(View v) { playStart();}
+
+                private void playStart() {
+                    moveDown(tvs[19]);
+
+                }
+
+            }); */
 
         }
 
+        moveDown(tvs[19]);
+        moveRight(tvs[18]);
+        moveDown(tvs[13]);
+        moveRight(tvs[12]);
+        moveUp(tvs[17]);
+
+
     }
+
+
+    private void moveRight(View v){
+        Animation mRight = new TranslateAnimation(Animation.ABSOLUTE,144, Animation.ABSOLUTE,Animation.ABSOLUTE);
+        mRight.setDuration(1000);
+        mRight.setFillAfter(true);
+
+        v.startAnimation(mRight);
+
+    }
+
+    private void moveLeft(View v){
+        Animation mLeft = new TranslateAnimation(Animation.ABSOLUTE,-144, Animation.ABSOLUTE,Animation.ABSOLUTE);
+        mLeft.setDuration(1000);
+        mLeft.setFillAfter(true);
+
+        v.startAnimation(mLeft);
+
+    }
+
+    private void moveUp(View v){
+        Animation mUp = new TranslateAnimation(Animation.ABSOLUTE, Animation.ABSOLUTE, Animation.ABSOLUTE, -144);
+        mUp.setDuration(1000);
+        mUp.setFillAfter(true);
+        v.startAnimation(mUp);
+    }
+
+    private void moveDown(View v){
+        Animation mDown = new TranslateAnimation(Animation.ABSOLUTE, Animation.ABSOLUTE,Animation.ABSOLUTE,144);
+        mDown.setDuration(1000);
+        mDown.setFillAfter(true);
+        v.startAnimation(mDown);
+
+    }
+
 
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
 
@@ -157,6 +209,7 @@ public class NumberGameAIActivity extends AppCompatActivity {
     };
 
 
+
     int inversions = 0;
 
     private int inversionCounter(List<Integer> A) {
@@ -178,6 +231,16 @@ public class NumberGameAIActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private void checkResult() {
+
+
+    }
+
+    private void showGameOver() {
+
+
     }
 
 
