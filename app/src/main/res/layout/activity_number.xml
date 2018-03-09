@@ -12,14 +12,12 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             >
-         <!--   android:layout_gravity="center_horizontal" -->
 
             <EditText
                 android:id="@+id/tv_time"
@@ -74,41 +72,41 @@
                 android:id="@+id/b00"
                 android:layout_row="0"
                 android:layout_column="0"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
             <ImageButton
                 android:id="@+id/b01"
                 android:layout_row="0"
                 android:layout_column="1"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
             <ImageButton
                 android:id="@+id/b02"
                 android:layout_row="0"
                 android:layout_column="2"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
             <ImageButton
                 android:id="@+id/b03"
                 android:layout_row="0"
                 android:layout_column="3"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
             <ImageButton
                 android:id="@+id/b04"
                 android:layout_row="0"
                 android:layout_column="4"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:contentDescription="@string/button"/>
             <ImageButton
                 android:id="@+id/b10"
                 android:layout_row="1"
                 android:layout_column="0"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -116,7 +114,7 @@
                 android:id="@+id/b11"
                 android:layout_row="1"
                 android:layout_column="1"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -124,7 +122,7 @@
                 android:id="@+id/b12"
                 android:layout_row="1"
                 android:layout_column="2"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -132,7 +130,7 @@
                 android:id="@+id/b13"
                 android:layout_row="1"
                 android:layout_column="3"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -140,7 +138,7 @@
                 android:id="@+id/b14"
                 android:layout_row="1"
                 android:layout_column="4"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
 
@@ -148,7 +146,7 @@
                 android:id="@+id/b20"
                 android:layout_row="2"
                 android:layout_column="0"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -156,7 +154,7 @@
                 android:id="@+id/b21"
                 android:layout_row="2"
                 android:layout_column="1"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -164,7 +162,7 @@
                 android:id="@+id/b22"
                 android:layout_row="2"
                 android:layout_column="2"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -172,7 +170,7 @@
                 android:id="@+id/b23"
                 android:layout_row="2"
                 android:layout_column="3"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -180,7 +178,7 @@
                 android:id="@+id/b24"
                 android:layout_row="2"
                 android:layout_column="4"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
 
@@ -188,7 +186,7 @@
                 android:id="@+id/b30"
                 android:layout_row="3"
                 android:layout_column="0"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -196,7 +194,7 @@
                 android:id="@+id/b31"
                 android:layout_row="3"
                 android:layout_column="1"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -204,7 +202,7 @@
                 android:id="@+id/b32"
                 android:layout_row="3"
                 android:layout_column="2"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -212,7 +210,7 @@
                 android:id="@+id/b33"
                 android:layout_row="3"
                 android:layout_column="3"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -220,7 +218,7 @@
                 android:id="@+id/b34"
                 android:layout_row="3"
                 android:layout_column="4"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
 
@@ -228,7 +226,7 @@
                 android:id="@+id/b40"
                 android:layout_row="4"
                 android:layout_column="0"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -236,7 +234,7 @@
                 android:id="@+id/b41"
                 android:layout_row="4"
                 android:layout_column="1"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -244,7 +242,7 @@
                 android:id="@+id/b42"
                 android:layout_row="4"
                 android:layout_column="2"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -252,7 +250,7 @@
                 android:id="@+id/b43"
                 android:layout_row="4"
                 android:layout_column="3"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginRight="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
@@ -260,7 +258,7 @@
                 android:id="@+id/b44"
                 android:layout_row="4"
                 android:layout_column="4"
-                style="@style/gridBGameStyle24"
+                style="@style/numberGameStyle"
                 android:layout_marginTop="@dimen/button_margin"
                 android:contentDescription="@string/button"/>
         </GridLayout>
@@ -271,29 +269,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp">
-            <!--    android:layout_gravity="center_horizontal" -->
 
             <TextView
-                android:id="@+id/tSScore"
+                android:id="@+id/step"
                 android:text="@string/Steps"
                 android:textSize="@dimen/textScore24"
-                style="@style/textGameStyle24"/>
+                style="@style/textGameStyle"/>
 
             <TextView
-                android:id="@+id/tScore"
+                android:id="@+id/steps"
                 android:textSize="@dimen/textScore24"
-                style="@style/textGameStyle24"/>
+                style="@style/textGameStyle"/>
 
             <TextView
-                android:id="@+id/tBestSScore"
+                android:id="@+id/history"
                 android:text="@string/bestScore"
                 android:textSize="@dimen/textBestScore24"
-                style="@style/textGameStyle24"/>
+                style="@style/textGameStyle"/>
 
             <TextView
-                android:id="@+id/tBestScore"
+                android:id="@+id/historys"
                 android:textSize="@dimen/textBestScore24"
-                style="@style/textGameStyle24"/>
+                style="@style/textGameStyle"/>
         </LinearLayout>
 
         <LinearLayout
@@ -303,23 +300,21 @@
             android:orientation="horizontal"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="10dp">
-        <!--    android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            -->
+
 
             <Button
                 android:layout_height="@dimen/buttonHeight"
                 android:layout_width="@dimen/buttonWidth"
-                android:id="@+id/bNewGame"
-                android:text="New Game"
+                android:id="@+id/newGameBtn"
+                android:text="Restart"
                 android:textSize="10dp"
                 android:layout_margin="@dimen/Margin"/>
 
             <Button
-                android:id="@+id/bBackMenu"
+                android:id="@+id/gotoMenuBtn"
                 android:layout_width="@dimen/buttonWidth"
                 android:layout_height="@dimen/buttonHeight"
-                android:text="Main Menu"
+                android:text="Home"
                 android:textSize="10dp"
                 android:layout_margin="@dimen/Margin"/>
         </LinearLayout>
