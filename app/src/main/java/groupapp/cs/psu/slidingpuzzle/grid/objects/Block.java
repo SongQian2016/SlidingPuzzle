@@ -29,4 +29,8 @@ public class Block {
     public int number() {
         return number;
     }
+
+    public char operation(){
+        return operation;
+    }
 }

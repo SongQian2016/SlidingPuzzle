@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "607503160281",
+    "firebase_url": "https://slidingpuzzle-6f88a-275d5.firebaseio.com",
+    "project_id": "slidingpuzzle-6f88a-275d5",
+    "storage_bucket": "slidingpuzzle-6f88a-275d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607503160281:android:fe713b35b321e995",
+        "android_client_info": {
+          "package_name": "com.pdx.payaljoshi.firebasegoogle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607503160281-2aqvkmmavmo21gsf55h2vf641jaqaui5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pdx.payaljoshi.firebasegoogle",
+            "certificate_hash": "dbf55bcf17cd1ea3d1b4e8f37e20ee772f1777d4"
+          }
+        },
+        {
+          "client_id": "607503160281-vo26c0bdfq3v10ddlvp7oirv7eb528b9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBflfP8MErVVHysNuE0sFPldXVqnrtgo6k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607503160281-vo26c0bdfq3v10ddlvp7oirv7eb528b9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607503160281:android:5da260051148ee1c",
+        "android_client_info": {
+          "package_name": "groupapp.cs.psu.slidingpuzzle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607503160281-44bqnv47o6mk215b6uobf2thd9tulctp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "groupapp.cs.psu.slidingpuzzle",
+            "certificate_hash": "dbf55bcf17cd1ea3d1b4e8f37e20ee772f1777d4"
+          }
+        },
+        {
+          "client_id": "607503160281-vo26c0bdfq3v10ddlvp7oirv7eb528b9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBflfP8MErVVHysNuE0sFPldXVqnrtgo6k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607503160281-vo26c0bdfq3v10ddlvp7oirv7eb528b9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

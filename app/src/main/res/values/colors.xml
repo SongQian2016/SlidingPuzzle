@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="sky">#CAEBF2</color>
+    <color name="carbon">#A9A9A9</color>
+    <color name="grain">#D7CEC7</color>
+    <color name="oxblood">#76323F</color>
+
 </resources>

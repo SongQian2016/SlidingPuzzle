@@ -3,10 +3,10 @@ package groupapp.cs.psu.slidingpuzzle.grid.objects;
 
 public class Coordinates {
 
-    private final int x;
+    private  int x;
 
 
-    private final int y;
+    private  int y;
 
 
     private Block block;
@@ -15,12 +15,16 @@ public class Coordinates {
     private Board board;
 
 
+    private String UID;
+
+
 
 
     public Coordinates(int x, int y, Board board) {
         this.x = x;
         this.y = y;
         this.board = board;
+
     }
 
     /** Create a new place with the given indices and a tile marked with
@@ -47,6 +51,16 @@ public class Coordinates {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+
+    public void setY(int y) {
+       this.y = y;
+    }
+
+
     /** Check if any block is present */
     public boolean hasBlock() {
         return block != null;
@@ -70,5 +84,13 @@ public class Coordinates {
 
     public void slide() {
         board.slide(getBlock());
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 }

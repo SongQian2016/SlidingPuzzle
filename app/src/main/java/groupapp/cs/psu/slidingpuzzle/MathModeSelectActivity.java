@@ -18,11 +18,11 @@ public class MathModeSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math_mode_select);
 
-        //Receiving and displaying the user name input by the user in the MathModeLogin activity.
+        //Receiving and displaying the user name input by the user in the MathModeRegisterActivity activity.
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MathModeLogin.EXTRA_MESSAGE);
+        String message = intent.getStringExtra(MathModeRegisterActivity.EXTRA_MESSAGE);
         TextView textView = findViewById(R.id.userGreeting);
-        textView.setText("Welcome " + message +"!");
+        //textView.setText("Welcome " + message +"!");
 
     }
 
@@ -40,7 +40,7 @@ public class MathModeSelectActivity extends AppCompatActivity {
 
          switch (item.getItemId()) {
              case R.id.mathItem1:
-                 Intent intent3 = new Intent(MathModeSelectActivity.this, DisplayGridActivity.class);
+                 Intent intent3 = new Intent(MathModeSelectActivity.this, Math1playerActivity.class);
                  this.startActivity(intent3);
                  break;
 

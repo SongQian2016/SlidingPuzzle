@@ -45,10 +45,7 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
     // references to our images
     private Integer[] mThumbIds = {
 

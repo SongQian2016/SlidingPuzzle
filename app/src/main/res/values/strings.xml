@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Sliding Puzzle</string>
     <string name="password">password</string>
+    <string name="app_info_flip">GestureDetector sample.\n\nCurrent Mode: FLIP\n\nSwipe left, right, up, down to change the views</string>
 </resources>

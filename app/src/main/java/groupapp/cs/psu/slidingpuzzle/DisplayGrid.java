@@ -18,7 +18,6 @@ public class DisplayGrid extends View {
 
     /** The board. */
     private Board board;
-
     /** The width. */
     private float width;
 
@@ -61,11 +60,43 @@ public class DisplayGrid extends View {
      *            the y
      * @return the place
      */
-    private Coordinates locateCoordinates(float x, float y) {
+    public Coordinates locateCoordinates(float x, float y) {
         int ix = (int) (x / width);
         int iy = (int) (y / height);
 
         return board.at(ix, iy);
+    }
+
+    /**
+     * Locate place.
+     *
+     * @param x
+     *            the x
+     * @param y
+     *            the y
+     * @return the place
+     */
+    public Coordinates locateCoordinates1(float x, float y) {
+        int ix = (int) (x / width);
+        int iy = (int) (y / height);
+
+        return board.at(iy-1,ix);
+    }
+
+    /**
+     * Locate place.
+     *
+     * @param x
+     *            the x
+     * @param y
+     *            the y
+     * @return the place
+     */
+    public Coordinates locateCoordinates2(float x, float y) {
+        int ix = (int) (x / width);
+        int iy = (int) (y / height);
+
+        return board.at(iy-1,ix );
     }
 
     /*
@@ -93,11 +124,11 @@ public class DisplayGrid extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         Paint background = new Paint();
-        background.setColor(getResources().getColor(R.color.colorAccent));
+        background.setColor(getResources().getColor(R.color.sky));
         canvas.drawRect(0, 0, getWidth(), getHeight(), background);
 
         Paint dark = new Paint();
-        dark.setColor(getResources().getColor(R.color.colorPrimary));
+        dark.setColor(getResources().getColor(R.color.grain));
         dark.setStrokeWidth(15);
 
         // Draw the major grid lines
@@ -107,7 +138,7 @@ public class DisplayGrid extends View {
         }
 
         Paint foreground = new Paint(Paint.ANTI_ALIAS_FLAG);
-        foreground.setColor(getResources().getColor(R.color.colorAccent));
+        foreground.setColor(getResources().getColor(R.color.oxblood));
         foreground.setStyle(Style.FILL);
         foreground.setTextSize(height * 0.75f);
         foreground.setTextScaleX(width / height);
@@ -123,9 +154,15 @@ public class DisplayGrid extends View {
                 if (it.hasNext()) {
                     Coordinates p = it.next();
                     if (p.hasBlock()) {
-                        String number = Integer.toString(p.getBlock().number());
-                        canvas.drawText(number, i * width + x, j * height + y,
-                                foreground);
+                        if (p.getBlock().operation() == ' ') {
+                            String number = Integer.toString(p.getBlock().number());
+                            canvas.drawText(number, i * width + x, j * height + y,
+                                    foreground);
+                        }else{
+                            String operation = Character.toString(p.getBlock().operation());
+                            canvas.drawText(operation, i * width + x, j * height + y,
+                                    foreground);
+                        }
                     } else {
                         canvas.drawRect(i * width, j * height, i * width
                                 + width, j * height + height, dark);

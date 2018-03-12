@@ -20,10 +20,10 @@ public class MathModeLogin extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNumGame();
+                openMathGame();
             }
 
-            private void openNumGame() {
+            private void openMathGame() {
                 Intent intent = new Intent(MathModeLogin.this, MathModeSelectActivity.class);
                 EditText username= (EditText) findViewById(R.id.logUser);
                 String message = username.getText().toString();

@@ -27,26 +27,37 @@ public class Board {
     public Board() {
         listeners = new ArrayList<BoardChangeListener>();
         coordinatesList = new ArrayList<Coordinates>((size) * (size));
+        int count1  = 0;
+        int count2 =0;
+        int count3 = 0;
+        ArrayList<Character> operators = getOperatorsList();
 
-        for (int x = 0; x < size; x++) {
+
+        for (int x = 0; x < 3; x++) {
             for (int y = 0; y < size; y++) {
-                coordinatesList.add(x == 1 && y == 4 ?
-                        new Coordinates(x, y, this)
-                        : new Coordinates(x, y,  y + (size * x), this));
+                if (count1 > 9){
+                    count1 = 0;
+                }
+                coordinatesList.add(x == 1 && y == 4 ?new Coordinates(x, y, this): new Coordinates(x, y, count1++, this));
             }
         }
 
-       /* for (int x = 0; x < 2; x++) {
-            for (int y = 0; y < 2; y++) {
-                coordinatesList.add(new Coordinates(x, y,  y + (size * x), this));
+        for (int x = 3; x < 4; x++) {
+            for (int y = 0; y < 3 ; y++) {
+                coordinatesList.add(new Coordinates(x, y,  random.nextInt(10), this));
             }
         }
 
-        for (int x = 2; x < size; x++) {
-            for (int y = 2; y < size; y++) {
-                coordinatesList.add(new Coordinates(x, y,  '+', this));
+        for (int x = 3; x < 4; x++) {
+            for (int y = 3; y < size; y++) {
+                coordinatesList.add(new Coordinates(x, y,operators.get(count2++) , this));
             }
-        }*/
+        }
+        for (int x = 4; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                coordinatesList.add(new Coordinates(x, y,operators.get(count2++) , this));
+            }
+        }
 
         numOfMoves = 0;
     }
@@ -61,6 +72,18 @@ public class Board {
         do {
             swapBlocks();
         } while (!solvable() || solved());
+    }
+
+    public ArrayList getOperatorsList(){
+        ArrayList<Character> operators = new ArrayList<Character>();
+        operators.add('+');
+        operators.add('-');
+        operators.add('*');
+        operators.add('/');
+        operators.add('=');
+        operators.add('=');
+        operators.add('=');
+        return operators;
     }
 
     /** Swap two tiles randomly. */

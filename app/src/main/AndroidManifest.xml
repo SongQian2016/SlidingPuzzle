@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="groupapp.cs.psu.slidingpuzzle">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,15 +23,14 @@
         <activity android:name=".NumberGameAIActivity" />
         <activity android:name=".MathModeSelectActivity" />
         <activity android:name=".NunModeSelectActivity" />
-        <activity android:name=".MathModeLogin"/>
-
+        <activity android:name=".MathModeRegisterActivity" />
+        <activity android:name=".DisplayGridActivity" />
         <activity android:name=".Math1playerActivity" />
         <activity android:name=".Math2playersActivity" />
         <activity android:name=".MathCutthroughActivity" />
-        <activity android:name=".NumberGameAIActivity" ></activity>
-
-
-
+        <activity android:name=".NumberGameAIActivity" />
+        <activity android:name=".MathModeLoginActivity" />
+        <activity android:name=".HighScoreActivity"></activity>
     </application>
 
 </manifest>
