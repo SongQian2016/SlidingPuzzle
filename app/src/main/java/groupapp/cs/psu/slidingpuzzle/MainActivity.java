@@ -8,38 +8,29 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Button numBtn, mathBtn,gridBtn;
+    public Button startbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        numBtn = (Button) findViewById(R.id.numButton);
+        startbtn = (Button) findViewById(R.id.startbtn);
 
-        mathBtn = (Button) findViewById(R.id.mathButton);
-
-        numBtn.setOnClickListener(new View.OnClickListener() {
+        startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 openNumGame();
             }
 
             private void openNumGame() {
-                Intent intent = new Intent(MainActivity.this, NunModeSelectActivity.class);
-                startActivity(intent);
-            }
-        });
-        mathBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMathGameSelection();
-            }
-
-            private void openMathGameSelection() {
-                Intent intent = new Intent(MainActivity.this, MathModeRegisterActivity.class);
+                Intent intent = new Intent(MainActivity.this, ModeSelectActivity.class);
                 startActivity(intent);
             }
         });
     }
 }
+
+
+

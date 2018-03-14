@@ -2,7 +2,11 @@ package groupapp.cs.psu.slidingpuzzle;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,16 +29,19 @@ public class HighScoreActivity extends AppCompatActivity {
     private List<PlayerScoreInformation> playerScores = new ArrayList<>();
     private TextView[] highScore = new TextView[5];
     private LinearLayout highScoreLayout;
+    private ListView highScoreList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_high_score);
 
         // Initialize the firebase database instance.
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("player");
         highScoreLayout = (LinearLayout) findViewById(R.id.high_score_cl);
+        highScoreList = (ListView) findViewById(R.id.listDisplayScore);
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -43,14 +50,12 @@ public class HighScoreActivity extends AppCompatActivity {
                     String email = (String) postSnapshot.child("email").getValue();
                     Long score = (Long) postSnapshot.child("singlePlayerScore").getValue();
                     playerScores.add(new PlayerScoreInformation(score.intValue(), email));
-                    populateHighScoreList();
                 }
 
                 Collections.sort(playerScores);
-
-                for(int i = 0; i < playerScores.size();i++ ){
-                    System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
-                }
+                //populateHighScoreList();
+                CustomAdapter customAdapter = new CustomAdapter();
+                highScoreList.setAdapter(customAdapter);
 
             }
             @Override
@@ -59,20 +64,59 @@ public class HighScoreActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_high_score);
+
 
     }
 
-    private void populateHighScoreList(){
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-        for(int i = 0; i < 5;i++ ){
-            System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
-            highScore[i]=new TextView(this);
-            highScore[i].setLayoutParams(params);
-            highScore[i].setText(playerScores.get(i).getEmail()+"  : "+playerScores.get(i).getSinglePlayerScore());
-            highScoreLayout.addView(highScore[i]);
+    private void populateHighScoreList() {
+
+        //if playerScores list contains 5 or more than 5 items, display only top 5
+        if (playerScores.size() >= 5) {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
+                highScore[i] = new TextView(this);
+                //highScore[i].setLayoutParams(params);
+                highScore[i].setText(playerScores.get(i).getEmail() + "  : " + playerScores.get(i).getSinglePlayerScore());
+                highScoreLayout.addView(highScore[i]);
+            }
+        } else {
+            for (int i = 0; i < playerScores.size(); i++) {
+                System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
+                highScore[i] = new TextView(this);
+                //highScore[i].setLayoutParams(params);
+                highScore[i].setText(playerScores.get(i).getEmail() + "  : " + playerScores.get(i).getSinglePlayerScore());
+                highScoreLayout.addView(highScore[i]);
+            }
         }
     }
 
+    class CustomAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return playerScores.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = getLayoutInflater().inflate(R.layout.highscorelayout,null);
+            TextView textView_email = (TextView) convertView.findViewById(R.id.textView_email);
+            TextView textView_score = (TextView) convertView.findViewById(R.id.textView_score);
+            textView_email.setText(playerScores.get(position).getEmail());
+            textView_score.setText(String.valueOf(playerScores.get(position).getSinglePlayerScore()));
+
+            return convertView;
+        }
+    }
 
 }

@@ -8,35 +8,40 @@
     tools:context="groupapp.cs.psu.slidingpuzzle.MainActivity">
 
     <Button
-        android:id="@+id/mathButton"
-        android:layout_width="181dp"
-        android:layout_height="86dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:background="@android:drawable/button_onoff_indicator_on"
-        android:text="Math"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/numButton"
+        android:id="@+id/startbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginStart="148dp"
+        android:text="Start"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="39dp"
+        android:background="@color/colorAccent"
+        android:text="SLIDING PUZZLE"
+        android:textSize="40dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/numButton"
-        android:layout_width="182dp"
-        android:layout_height="86dp"
-        android:layout_marginBottom="165dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:background="@android:drawable/button_onoff_indicator_on"
-        android:text="Number"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mathButton" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/puzzlepic1" />
 
 </android.support.constraint.ConstraintLayout>
