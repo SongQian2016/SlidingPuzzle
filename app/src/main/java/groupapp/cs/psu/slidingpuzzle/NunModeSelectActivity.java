@@ -6,46 +6,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class NunModeSelectActivity extends AppCompatActivity {
+
+    public Button button1, button2, button3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nun_mode_select);
 
-    }
+        button1 = (Button) findViewById(R.id.spbutton);
+        button2 = (Button) findViewById(R.id.aibutton);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-            MenuInflater menuInflater = getMenuInflater();
-
-            menuInflater.inflate(R.menu.menu_options, menu);
-            return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-            switch (item.getItemId()) {
-                case R.id.item1:
-                    Intent intent1 = new Intent(NunModeSelectActivity.this, NumberGameActivity.class);
-                    startActivity(intent1);
-                    break;
-
-                case R.id.item2:
-                    Intent intent2 = new Intent(NunModeSelectActivity.this, NumberGameAIActivity.class);
-                    startActivity(intent2);
-                    break;
-
-                default:
-                    return super.onOptionsItemSelected(item);
-
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                opennum1();
             }
-            return true;
+
+            private void opennum1() {
+
+                Intent intent = new Intent(NunModeSelectActivity.this, NumberGameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                opennum2();
+            }
+
+            private void opennum2() {
+
+                Intent intent = new Intent(NunModeSelectActivity.this, NumberGameAIActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
 }
-
-
