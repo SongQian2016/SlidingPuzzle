@@ -1,13 +1,10 @@
 package groupapp.cs.psu.slidingpuzzle.firebase.objects;
 
 
-// This class helps to store data to firebase
+// This class helps to store data on firebase
 public class PlayerScoreInformation implements Comparable {
 
-
     public int singlePlayerScore;
-
-
 
     public String email;
 

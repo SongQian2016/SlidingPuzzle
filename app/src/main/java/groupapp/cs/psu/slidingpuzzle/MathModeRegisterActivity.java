@@ -33,8 +33,6 @@ public class MathModeRegisterActivity extends AppCompatActivity implements View.
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +40,6 @@ public class MathModeRegisterActivity extends AppCompatActivity implements View.
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-
-        /*if(firebaseAuth.getCurrentUser() != null){
-            //profile activity
-            finish();
-            startActivity(new Intent(getApplicationContext(),DisplayGridActivity.class));
-        }*/
 
         //Initializing views
         buttonRegister = (Button) findViewById(R.id.loginBut);
@@ -58,12 +50,8 @@ public class MathModeRegisterActivity extends AppCompatActivity implements View.
 
         //Changed
         databaseReference = FirebaseDatabase.getInstance().getReference("player");
-        //
-
         buttonRegister.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
-
-
     }
 
     private void registerUser(){

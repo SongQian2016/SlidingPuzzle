@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/MathModeSelect"
@@ -9,64 +10,42 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="366dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="120dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:text="Please select play mode in menu bar on the top right."
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@android:color/holo_purple"
-        android:textSize="12sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="280dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:text="Start the wonderful math puzzle"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textStyle="bold"
-        android:typeface="serif"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <ImageView
-        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/ic_launcher_background"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        android:layout_marginEnd="63dp"
+        android:layout_marginTop="45dp"
+        android:background="@color/colorAccent"
+        android:text="Math mode"
+        android:textSize="45dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@android:drawable/ic_menu_help" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/userGreeting"
-        android:layout_width="178dp"
-        android:layout_height="18dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="11dp" />
+    <Button
+        android:id="@+id/singleplayerbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:background="@color/colorAccent"
+        android:text="Single Player"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/multiplayerbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:background="@color/colorAccent"
+        android:text="Multi player"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/singleplayerbutton"
+        app:layout_constraintTop_toBottomOf="@+id/singleplayerbutton"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="322dp" />
 
 </android.support.constraint.ConstraintLayout>

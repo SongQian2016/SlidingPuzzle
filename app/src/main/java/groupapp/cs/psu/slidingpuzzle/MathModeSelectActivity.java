@@ -1,13 +1,10 @@
 package groupapp.cs.psu.slidingpuzzle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.content.Intent;
-import android.widget.TextView;
 
 public class MathModeSelectActivity extends AppCompatActivity {
 
@@ -18,45 +15,29 @@ public class MathModeSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math_mode_select);
 
-        //Receiving and displaying the user name input by the user in the MathModeRegisterActivity activity.
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MathModeRegisterActivity.EXTRA_MESSAGE);
-        TextView textView = findViewById(R.id.userGreeting);
-        //textView.setText("Welcome " + message +"!");
+        button1 = (Button) findViewById(R.id.singleplayerbutton);
+        button2 = (Button) findViewById(R.id.multiplayerbutton);
 
-    }
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open1();
+            }
+            private void open1() {
+                Intent intent = new Intent(MathModeSelectActivity.this, Math1playerActivity.class);
+                startActivity(intent);
+            }
+        });
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-
-        menuInflater.inflate(R.menu.play_options, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-         switch (item.getItemId()) {
-             case R.id.mathItem1:
-                 Intent intent3 = new Intent(MathModeSelectActivity.this, Math1playerActivity.class);
-                 this.startActivity(intent3);
-                 break;
-
-             case R.id.mathItem2:
-                 Intent intent4 = new Intent(MathModeSelectActivity.this, Math2playersActivity.class);
-                 this.startActivity(intent4);
-                 break;
-
-             case R.id.mathItem3:
-                 Intent intent5 = new Intent(MathModeSelectActivity.this, MathCutthroughActivity.class);
-                 this.startActivity(intent5);
-                 break;
-             default:
-                 return super.onOptionsItemSelected(item);
-         }
-         return true;
-
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open2();
+            }
+            private void open2() {
+                Intent intent = new Intent(MathModeSelectActivity.this, Math2playersActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

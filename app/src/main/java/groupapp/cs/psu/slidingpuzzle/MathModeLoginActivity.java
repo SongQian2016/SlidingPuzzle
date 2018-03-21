@@ -33,13 +33,6 @@ public class MathModeLoginActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_math_mode_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
-      /*  if(firebaseAuth.getCurrentUser() != null){
-            //profile activity
-            finish();
-            startActivity(new Intent(getApplicationContext(),DisplayGridActivity.class));
-        }
-*/
         progressDialog = new ProgressDialog(this);
         editTextEmail = (EditText) findViewById(R.id.logUser);
         editTextPassword = (EditText) findViewById(R.id.logPassword);
@@ -48,8 +41,6 @@ public class MathModeLoginActivity extends AppCompatActivity implements View.OnC
 
         buttonSignIn.setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
-
-
     }
 
     private void userLogin(){

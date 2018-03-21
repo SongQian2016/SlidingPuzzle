@@ -8,4 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="numberGameStyle">
+        <item name="android:layout_width">@dimen/buttonSize24</item>
+        <item name="android:layout_height">@dimen/buttonSize24</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="textGameStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:shadowColor">@color/Black</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
 </resources>

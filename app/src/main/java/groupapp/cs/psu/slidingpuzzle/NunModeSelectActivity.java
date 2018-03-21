@@ -3,49 +3,42 @@ package groupapp.cs.psu.slidingpuzzle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class NunModeSelectActivity extends AppCompatActivity {
+
+    public Button button3, button4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nun_mode_select);
 
-    }
+        button3 = (Button) findViewById(R.id.spbutton);
+        button4 = (Button) findViewById(R.id.aibutton);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-            MenuInflater menuInflater = getMenuInflater();
-
-            menuInflater.inflate(R.menu.menu_options, menu);
-            return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-            switch (item.getItemId()) {
-                case R.id.item1:
-                    Intent intent1 = new Intent(NunModeSelectActivity.this, NumberGameActivity.class);
-                    startActivity(intent1);
-                    break;
-
-                case R.id.item2:
-                    Intent intent2 = new Intent(NunModeSelectActivity.this, NumberGameAIActivity.class);
-                    startActivity(intent2);
-                    break;
-
-                default:
-                    return super.onOptionsItemSelected(item);
-
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open3();
             }
-            return true;
+            private void open3() {
+                Intent intent = new Intent(NunModeSelectActivity.this, NumberActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open4();
+            }
+            private void open4() {
+                Intent intent = new Intent(NunModeSelectActivity.this, NumberGameAIActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
-
 }
-
-
