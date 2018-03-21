@@ -1,15 +1,11 @@
 package groupapp.cs.psu.slidingpuzzle;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -21,18 +17,21 @@ import java.util.List;
 
 public class NumberGameAIActivity extends AppCompatActivity {
 
-    private static final int N = 5;
-    public Button startBtn, exitBtn;
+    public final static int N = 25;
+    public Button startBtn, nextBtn;
     public List numArray = new ArrayList<>();
-    public TextView[] tvs = new TextView[25];
-    public TextView temp;
-    public List<String> textList = new ArrayList<String>(numArray.size());
-    public int[][] board = new int [N][N];
+    public TextView[] tvs = new TextView[N];
+    public List<String> textList = new ArrayList<String>();
+    private List<List<String>> childrenStates = new ArrayList<>();
 
+    private List<List<String>> visited = new ArrayList<>();
+
+    private int count = 0, preSteps = 0;
+
+    public List<String> tvStrs = new ArrayList<String>(N);
     public ToggleButton pauseBtn;
     private TextView tv_time;
-
-    private float dX, dY;
+    //private float dX, dY;
 
     private boolean ispaused = false;
     private boolean mstarted;
@@ -45,7 +44,6 @@ public class NumberGameAIActivity extends AppCompatActivity {
 
     private Handler mhandler;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +52,12 @@ public class NumberGameAIActivity extends AppCompatActivity {
         startBtn = (Button) findViewById(R.id.startBt);
         tv_time = (TextView) findViewById(R.id.tv_time);
         startBtn = (Button) findViewById(R.id.startBt);
-        exitBtn = (Button) findViewById(R.id.exitBt);
+        nextBtn = (Button) findViewById(R.id.nextBt);
         pauseBtn = (ToggleButton) findViewById(R.id.pauseBtn);
 
         mhandler = new Handler();
         // button visibility
-        exitBtn.setEnabled(false);
+        nextBtn.setEnabled(false);
         pauseBtn.setEnabled(false);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,16 +65,31 @@ public class NumberGameAIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startBtn.setEnabled(false);
+                // startBtn.setEnabled(false);
                 pauseBtn.setEnabled(true);
-                exitBtn.setEnabled(true);
+                nextBtn.setEnabled(true);
 
                 ispaused=false;
 
                 starttimer();
-                init();
-               // playStart();
 
+                List<String> visit = new ArrayList<>();
+                for (int i = 0; i < N; i++) {
+                    visit.add(" ");
+                }
+                visited.add(visit);
+                init();
+                //initiate();
+
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                aiSearch();
+                preSteps++;
             }
         });
 
@@ -86,103 +99,310 @@ public class NumberGameAIActivity extends AppCompatActivity {
                 pausetimer();
             }
         });
-
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pausetimer();
-                tv_time.setText("00:00:00");
-                openMenu();
-            }
-
-            private void openMenu() {
-                Intent intent = new Intent(NumberGameAIActivity.this, NunModeSelectActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        checkResult();
-        showGameOver();
-
     }
 
     public void init() {
 
-        for (int i = 1; i <= 24; i++) {
+        for (int i = 0; i <= 24; i++) {
             numArray.add(i);
         }
+        //generate solvable board
+
         Collections.shuffle(numArray);
 
         while (!isSolvable(numArray)) {
             Collections.shuffle(numArray);
         }
-        //Log.d("Number generated.");
-        for (int i = 0; i < numArray.size(); ++i) {
+        for (int i = 0; i < N; i++) {
             textList.add(String.valueOf((numArray.get(i))));
             String textID = "textView" + i;
             int resID = getResources().getIdentifier(textID, "id", getPackageName());
             tvs[i] = (TextView) findViewById(resID);
+            tvStrs.add("0");
+            if (textList.get(i).equals("0")) {
+                tvs[i].setText(" ");
+            } else  {
+                tvs[i].setText(textList.get(i));
+            }
+        }
+    }
+
+    private void initiate() {
+        for (int i = 0; i < N; i++) {
+            textList.add(String.valueOf(i+1));
+            String textID = "textView" + i;
+            int resID = getResources().getIdentifier(textID, "id", getPackageName());
+            tvs[i] = (TextView) findViewById(resID);
+            tvStrs.add("0");
             tvs[i].setText(textList.get(i));
-            tvs[i].setOnTouchListener(onTouchListener);
-    /*        tvs[i].setOnClickListener(new View.OnClickListener() {
+        }
+        //textList.add(String.valueOf((numArray.get(i))));
+        tvs[8].setText(" ");
+        tvs[13].setText("9");
+        tvs[14].setText("14");
+        tvs[19].setText("15");
+        tvs[18].setText("20");
+        tvs[21].setText("17");
+        tvs[16].setText("18");
+        tvs[17].setText("19");
+        tvs[24].setText("24");
+        tvs[23].setText("23");
+        tvs[22].setText("22");
 
-                @Override
-                public void onClick(View v) { playStart();}
+    }
 
-                private void playStart() {
-                    moveDown(tvs[19]);
+    private List<List<String>> getAllChildren(List<String> currentState) {
+        String temp;
+        List<String> upDateCurrentState;
+        if (!childrenStates.isEmpty()) {
+            childrenStates.clear();
+        }
+        for(int i = 0; i < N; i++) {
+            if(currentState.get(i).equals(" ")) {
+                if(i == 6 || i==7 || i ==8 || i==11 ||i==12 || i==13 || i==16
+                        || i==17|| i==18) {
+
+                    temp = currentState.get(i + 1);
+                    currentState.set(i, currentState.get(i + 1));
+                    currentState.set(i + 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 1);
+                    currentState.set(i, currentState.get(i - 1));
+                    currentState.set(i - 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i - 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i + 5);
+                    currentState.set(i, currentState.get(i + 5));
+                    currentState.set(i + 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 5, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 5);
+                    currentState.set(i, currentState.get(i - 5));
+                    currentState.set(i - 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if(i == 1 || i== 2 || i==3) {
+
+                    temp = currentState.get(i + 1);
+                    currentState.set(i, currentState.get(i + 1));
+                    currentState.set(i + 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 1);
+                    currentState.set(i, currentState.get(i - 1));
+                    currentState.set(i - 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i - 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i + 5);
+                    currentState.set(i, currentState.get(i + 5));
+                    currentState.set(i + 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if( i== 21 || i==22 || i==23) {
+
+                    temp = currentState.get(i + 1);
+                    currentState.set(i, currentState.get(i + 1));
+                    currentState.set(i + 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 1);
+                    currentState.set(i, currentState.get(i - 1));
+                    currentState.set(i - 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i - 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 5);
+                    currentState.set(i, currentState.get(i - 5));
+                    currentState.set(i - 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if (i== 5 || i == 10 || i==15) {
+
+                    temp = currentState.get(i + 1);
+                    currentState.set(i, currentState.get(i + 1));
+                    currentState.set(i + 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i + 5);
+                    currentState.set(i, currentState.get(i + 5));
+                    currentState.set(i + 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 5, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 5);
+                    currentState.set(i, currentState.get(i - 5));
+                    currentState.set(i - 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if(i == 9|| i == 14 || i ==19) {
+
+                    temp = currentState.get(i - 1);
+                    currentState.set(i, currentState.get(i - 1));
+                    currentState.set(i - 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i - 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i + 5);
+                    currentState.set(i, currentState.get(i + 5));
+                    currentState.set(i + 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 5, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 5);
+                    currentState.set(i, currentState.get(i - 5));
+                    currentState.set(i - 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if (i == 0) {
+                    temp = currentState.get(i + 1);
+                    currentState.set(i, currentState.get(i + 1));
+                    currentState.set(i + 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i + 5);
+                    currentState.set(i, currentState.get(i + 5));
+                    currentState.set(i + 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                }else if ( i == 4) {
+
+                    temp = currentState.get(i - 1);
+                    currentState.set(i, currentState.get(i - 1));
+                    currentState.set(i - 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i - 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i + 5);
+                    currentState.set(i, currentState.get(i + 5));
+                    currentState.set(i + 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if ( i == 20) {
+
+                    temp = currentState.get(i + 1);
+                    currentState.set(i, currentState.get(i + 1));
+                    currentState.set(i + 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i + 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 5);
+                    currentState.set(i, currentState.get(i - 5));
+                    currentState.set(i - 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
+
+                } else if (i == 24) {
+
+                    temp = currentState.get(i - 1);
+                    currentState.set(i, currentState.get(i - 1));
+                    currentState.set(i - 1, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    currentState.set(i - 1, temp);
+                    currentState.set(i, " ");
+                    temp = currentState.get(i - 5);
+                    currentState.set(i, currentState.get(i - 5));
+                    currentState.set(i - 5, " ");
+                    upDateCurrentState = new ArrayList<String>(currentState);
+                    childrenStates.add(upDateCurrentState);
+                    break;
 
                 }
-
-            }); */
-
+            }
         }
-
-        moveDown(tvs[19]);
-        moveRight(tvs[18]);
-        moveDown(tvs[13]);
-        moveRight(tvs[12]);
-        moveUp(tvs[17]);
-
-
+        return childrenStates;
     }
 
-
-    private void moveRight(View v){
-        Animation mRight = new TranslateAnimation(Animation.ABSOLUTE,144, Animation.ABSOLUTE,Animation.ABSOLUTE);
-        mRight.setDuration(1000);
-        mRight.setFillAfter(true);
-
-        v.startAnimation(mRight);
-
+    private int numOfWrongPosition(List<String> currentStateList) {
+        count = 0;
+        for(int i = 0; i < N;i++){
+            if (!currentStateList.get(i).equals(String.valueOf(i+1))
+                    && (!currentStateList.get(i).equals(" "))) {
+                count += 1;
+            }
+        }
+        return count;
     }
 
-    private void moveLeft(View v){
-        Animation mLeft = new TranslateAnimation(Animation.ABSOLUTE,-144, Animation.ABSOLUTE,Animation.ABSOLUTE);
-        mLeft.setDuration(1000);
-        mLeft.setFillAfter(true);
+    int minCount, index;
+    private List<String> getOptimal (List<String> gTvs) {
 
-        v.startAnimation(mLeft);
+        List<List<String>> tempChildren = new ArrayList<List<String>>();
 
+        tempChildren = getAllChildren(gTvs);
+
+        minCount = numOfWrongPosition(tempChildren.get(0));
+        index = 0;
+        for(int i = 1; i < tempChildren.size(); i++) {
+            if ((!visited.contains(tempChildren.get(i))) && numOfWrongPosition(tempChildren.get(i)) < minCount ) {
+                minCount = numOfWrongPosition(tempChildren.get(i));
+                index = i;
+
+            }
+        }
+        //visited.add(tempChildren.get(index));
+        return tempChildren.get(index);
     }
 
-    private void moveUp(View v){
-        Animation mUp = new TranslateAnimation(Animation.ABSOLUTE, Animation.ABSOLUTE, Animation.ABSOLUTE, -144);
-        mUp.setDuration(1000);
-        mUp.setFillAfter(true);
-        v.startAnimation(mUp);
+    private void aiSearch() {
+        for (int i = 0; i < N; i++) {
+            String textID = "textView" + i;
+            int resID = getResources().getIdentifier(textID, "id", getPackageName());
+            tvs[i] = (TextView) findViewById(resID);
+        }
+        for (int i = 0; i < N; i++) {
+            if (tvs[i].getText().toString().equals(" ")) {
+                tvStrs.set(i, " ");
+            } else {
+                tvStrs.set(i, tvs[i].getText().toString());
+            }
+        }
+        List<String> tempString = new ArrayList<>(getOptimal(tvStrs));
+        visited.add(tempString);
+        for(int i = 0; i < N; i++) {
+            tvs[i].setText(tempString.get(i));
+        }
     }
 
-    private void moveDown(View v){
-        Animation mDown = new TranslateAnimation(Animation.ABSOLUTE, Animation.ABSOLUTE,Animation.ABSOLUTE,144);
-        mDown.setDuration(1000);
-        mDown.setFillAfter(true);
-        v.startAnimation(mDown);
-
-    }
-
-
-    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+ /*   View.OnTouchListener onTouchListener = new View.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -206,14 +426,11 @@ public class NumberGameAIActivity extends AppCompatActivity {
 
         }
 
-    };
-
-
+    }; */
 
     int inversions = 0;
 
     private int inversionCounter(List<Integer> A) {
-
         for (int i = 0; i < A.size() - 1; ++i) {
             for (int j = i + 1; j < A.size(); ++j) {
                 if (A.get(i) > A.get(j)) {
@@ -233,17 +450,6 @@ public class NumberGameAIActivity extends AppCompatActivity {
         return true;
     }
 
-    private void checkResult() {
-
-
-    }
-
-    private void showGameOver() {
-
-
-    }
-
-
     private void starttimer() {
         mstarted=true;
         starttime= SystemClock.uptimeMillis();
@@ -254,23 +460,17 @@ public class NumberGameAIActivity extends AppCompatActivity {
         if(pauseBtn.isChecked()) {
             ispaused=true;
             mstarted=false;
-            //timeSwap += millis;
             mhandler.removeCallbacks(mrunnable);
             currenttime = SystemClock.uptimeMillis() - starttime;
-            //currenttime = SystemClock.uptimeMillis() - starttime;
         }
         else
         {
             ispaused=false;
             mstarted=true;
-            //starttime = System.currentTimeMillis() - currenttime;
             starttime = SystemClock.uptimeMillis() - currenttime;
             mhandler.postAtTime(mrunnable,0L);
-            //mhandler.removeCallbacks(mrunnable);
-            //mhandler.postDelayed(mrunnable,0L);
         }
     }
-
     private final Runnable mrunnable = new Runnable() {
         @Override
         public void run() {
@@ -285,8 +485,18 @@ public class NumberGameAIActivity extends AppCompatActivity {
             }
         }
     };
-
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
