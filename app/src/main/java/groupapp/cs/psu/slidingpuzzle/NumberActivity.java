@@ -73,7 +73,6 @@ public class NumberActivity extends AppCompatActivity {
 
         startBtn = (Button) findViewById(R.id.startBt);
         tv_time = (TextView) findViewById(R.id.tv_time);
-        startBtn = (Button) findViewById(R.id.startBt);
         exitBtn = (Button) findViewById(R.id.exitBt);
         pauseBtn = (ToggleButton) findViewById(R.id.pauseBtn);
 
@@ -109,10 +108,9 @@ public class NumberActivity extends AppCompatActivity {
             public void onClick(View view) {
                 pausetimer();
                 tv_time.setText("00:00:00");
-                openMenu();
+                goBackHome();
             }
-
-            private void openMenu() {
+            private void goBackHome() {
                 Intent intent = new Intent(NumberActivity.this, NunModeSelectActivity.class);
                 startActivity(intent);
             }

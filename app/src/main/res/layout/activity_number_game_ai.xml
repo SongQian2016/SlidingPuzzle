@@ -377,7 +377,7 @@
         android:visibility="visible"
         android:background="#00FF00"/>
 
-    <!--   <TextView
+      <TextView
            android:id="@+id/textView24"
            android:layout_width="70sp"
            android:layout_height="70sp"
@@ -389,7 +389,7 @@
            android:textColor="@android:color/black"
            android:textSize="18sp"
            android:visibility="visible"
-           android:background="#00FF00"/> -->
+           android:background="#00FF00"/>
 
     <EditText
         android:id="@+id/tv_time"
@@ -428,12 +428,12 @@
         />
 
     <Button
-        android:id="@+id/exitBt"
+        android:id="@+id/nextBt"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_column="3"
         android:layout_gravity="fill"
-        android:text="Exit"
+        android:text="Next"
         android:textSize="12dp"
 
         />
