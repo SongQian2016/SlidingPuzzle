@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".MathGameActivity" />
         <activity android:name=".NumberGameActivity" />
+        <activity android:name=".NumberActivity" />
         <activity android:name=".NumberGameAIActivity" />
         <activity android:name=".MathModeSelectActivity" />
         <activity android:name=".NunModeSelectActivity" />
