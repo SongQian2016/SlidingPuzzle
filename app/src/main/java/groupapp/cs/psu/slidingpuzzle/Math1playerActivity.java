@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,11 +27,12 @@ import java.util.Collections;
 import java.util.List;
 
 import groupapp.cs.psu.slidingpuzzle.firebase.objects.PlayerScoreInformation;
+import android.os.SystemClock;
 
 public class Math1playerActivity extends AppCompatActivity implements View.OnClickListener,GestureDetector.OnGestureListener {
 
     private Button[][] buttons = new Button[5][5];
-    Chronometer chronometer;
+    Chronometer GameTimer;
     private SharedPreferences shared_pref;
     private List<Object> gridValues = new ArrayList<>();
     private GestureDetector gDetector;
@@ -46,6 +48,8 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
     private Button displayHighScore;
     private List<String> submittedEquations = new ArrayList<>();
 
+    private Button pausebutton;
+    private long lastPause;
 
     /**
      *
@@ -100,6 +104,22 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
             }
     }
 
+    private void populateGridsOnPause(LinearLayout.LayoutParams params){
+        int k = 0;
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 5; j++) {
+                buttons[i][j].setOnClickListener(null);
+            }
+    }
+
+    private void populateGridsOnResume(LinearLayout.LayoutParams params){
+        int k = 0;
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 5; j++) {
+                buttons[i][j].setOnClickListener(this);
+            }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +129,7 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
 
 
         //LinearLayout page;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
         createGridValues();
         populateGrids(params);
 
@@ -136,7 +156,7 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         NewLine.setOrientation(LinearLayout.HORIZONTAL);
 
 
-       //Score Display
+        //Score Display
         Score = new TextView(this);
         Score.setLayoutParams(params);
 
@@ -166,18 +186,50 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         Time.setLayoutParams(params);
         Time.setText("Timer:");
         NewLine.addView(Time);
-        chronometer = new Chronometer(this);
+        GameTimer = new Chronometer(this);
         if (shared_pref.getLong("chrono", -1) != -1)
-            chronometer.setBase(shared_pref.getLong("chrono", 0));
-        chronometer.start();
-        chronometer.setLayoutParams(params);
-        NewLine.addView(chronometer);
+            GameTimer.setBase(shared_pref.getLong("chrono", 0));
+        GameTimer.start();
+        GameTimer.setLayoutParams(params);
+        NewLine.addView(GameTimer);
         page.addView(NewLine);
 
-
         LinearLayout NewLine2 = new LinearLayout(this);
-        NewLine.setOrientation(LinearLayout.HORIZONTAL);
+        NewLine2.setOrientation(LinearLayout.HORIZONTAL);
 
+        // Display Pause Button
+        pausebutton = new Button(this);
+        pausebutton.setText("Pause");
+        pausebutton.setLayoutParams(params);
+        NewLine2.addView(pausebutton);
+        page.addView(NewLine2);
+
+        setContentView(page);
+        gDetector = new GestureDetector(this,this);
+
+        pausebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pausetext = pausebutton.getText().toString();
+                if(pausetext.equals("Pause")){
+                    pausebutton.setText("Resume");
+                    lastPause = SystemClock.elapsedRealtime();
+                    GameTimer.stop();
+                    populateGridsOnPause(params);
+                }
+                else{
+                    pausebutton.setText("Pause");
+                    GameTimer.setBase(GameTimer.getBase()+ SystemClock.elapsedRealtime()-lastPause);
+                    GameTimer.start();
+                    populateGridsOnResume(params);
+                    setContentView(page);
+                }
+            }
+        });
+
+
+        LinearLayout NewLine3 = new LinearLayout(this);
+        NewLine3.setOrientation(LinearLayout.HORIZONTAL);
 
         // Display High Score Button
         displayHighScore = new Button(this);
@@ -189,14 +241,8 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(Math1playerActivity.this, HighScoreActivity.class));
             }
         });
-        NewLine2.addView(displayHighScore);
-        page.addView(NewLine2);
-
-
-
-        setContentView(page);
-        gDetector = new GestureDetector(this,this);
-
+        NewLine3.addView(displayHighScore);
+        page.addView(NewLine3);
 
         // Set it up for use:
         page.setOnTouchListener(new View.OnTouchListener() {
@@ -206,30 +252,30 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         });
 
 
-        }
+    }
 
 
     @Override
     public void onClick(View v) {
         try{
-        Button button = (Button)v;
-        String[] s = button.getTag().toString().split(" ");
-        int x = Integer.parseInt(s[0]);
-        int y = Integer.parseInt(s[1]);
+            Button button = (Button)v;
+            String[] s = button.getTag().toString().split(" ");
+            int x = Integer.parseInt(s[0]);
+            int y = Integer.parseInt(s[1]);
 
-        int[] xx = {x - 1, x, x + 1, x};
-        int[] yy = {y, y - 1, y, y + 1};
+            int[] xx = {x - 1, x, x + 1, x};
+            int[] yy = {y, y - 1, y, y + 1};
 
-        for (int k = 0; k < 5; k++) {
+            for (int k = 0; k < 5; k++) {
 
-            int i = xx[k];
-            int j = yy[k];
-            if (i >= 0 && i < 5 && j >= 0 && j < 5 && buttons[i][j].getText().equals("")) {
-                buttons[i][j].setText(button.getText());
-                button.setText("");
-                break;
-            }
-        }}catch (Exception e){
+                int i = xx[k];
+                int j = yy[k];
+                if (i >= 0 && i < 5 && j >= 0 && j < 5 && buttons[i][j].getText().equals("")) {
+                    buttons[i][j].setText(button.getText());
+                    button.setText("");
+                    break;
+                }
+            }}catch (Exception e){
             Toast.makeText(this, "Make a valid move!", Toast.LENGTH_SHORT).show();
         }
     }

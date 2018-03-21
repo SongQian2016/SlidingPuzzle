@@ -10,23 +10,24 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="63dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="45dp"
-        android:background="@color/colorAccent"
+        android:background="@color/sky"
         android:text="Math mode"
         android:textSize="45dp"
         android:textStyle="bold"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/singleplayerbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="240dp"
-        android:background="@color/colorAccent"
+        android:background="@color/sky"
         android:text="Single Player"
         android:textSize="25dp"
         android:textStyle="italic"
@@ -36,10 +37,10 @@
 
     <Button
         android:id="@+id/multiplayerbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:background="@color/colorAccent"
+        android:background="@color/sky"
         android:text="Multi player"
         android:textSize="25dp"
         android:textStyle="italic"
@@ -47,5 +48,17 @@
         app:layout_constraintTop_toBottomOf="@+id/singleplayerbutton"
         tools:layout_editor_absoluteX="118dp"
         tools:layout_editor_absoluteY="322dp" />
+
+    <Button
+        android:id="@+id/highscorebutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:background="@color/sky"
+        android:text="High Scores"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/singleplayerbutton"
+        app:layout_constraintTop_toBottomOf="@+id/singleplayerbutton" />
 
 </android.support.constraint.ConstraintLayout>
