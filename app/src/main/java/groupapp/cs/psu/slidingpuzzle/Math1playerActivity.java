@@ -106,24 +106,6 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
 
         shared_pref = getPreferences(MODE_PRIVATE);
 
-        //Firebase to fetch the score from backend
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("player");
-        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(
-
-                new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        playerScoreInformation = dataSnapshot.getValue(PlayerScoreInformation.class);
-                        score = playerScoreInformation.getSinglePlayerScore();
-                        System.out.println("Score:" + score );
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
 
         //LinearLayout page;
@@ -157,7 +139,26 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
        //Score Display
         Score = new TextView(this);
         Score.setLayoutParams(params);
-        Score.setText("Score: " + score);
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("player");
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                score = ((Long)dataSnapshot.child("singlePlayerScore").getValue()).intValue();
+                Score.setText("Score: " + score);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //Score.setText("Score: " + score);
         NewLine.addView(Score);
 
         //Timer

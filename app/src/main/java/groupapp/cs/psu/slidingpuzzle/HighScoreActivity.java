@@ -30,6 +30,7 @@ public class HighScoreActivity extends AppCompatActivity {
     private TextView[] highScore = new TextView[5];
     private LinearLayout highScoreLayout;
     private ListView highScoreList;
+    private  List<PlayerScoreInformation> topPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
                 Collections.sort(playerScores);
                 //populateHighScoreList();
+                topPlayers = new ArrayList<PlayerScoreInformation>(playerScores.subList(0, Math.min(playerScores.size(), 5)));
                 CustomAdapter customAdapter = new CustomAdapter();
                 highScoreList.setAdapter(customAdapter);
 
@@ -94,7 +96,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return playerScores.size();
+            return topPlayers.size();
         }
 
         @Override
@@ -112,8 +114,8 @@ public class HighScoreActivity extends AppCompatActivity {
             convertView = getLayoutInflater().inflate(R.layout.highscorelayout,null);
             TextView textView_email = (TextView) convertView.findViewById(R.id.textView_email);
             TextView textView_score = (TextView) convertView.findViewById(R.id.textView_score);
-            textView_email.setText(playerScores.get(position).getEmail());
-            textView_score.setText(String.valueOf(playerScores.get(position).getSinglePlayerScore()));
+            textView_email.setText(topPlayers.get(position).getEmail());
+            textView_score.setText(String.valueOf(topPlayers.get(position).getSinglePlayerScore()));
 
             return convertView;
         }
