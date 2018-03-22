@@ -30,6 +30,7 @@
         <activity android:name=".Math2playersActivity" />
         <activity android:name=".MathCutthroughActivity" />
         <activity android:name=".HighScoreActivity"/>
+        <activity android:name=".MathModeRegisterActivity"/>
 
     </application>
 

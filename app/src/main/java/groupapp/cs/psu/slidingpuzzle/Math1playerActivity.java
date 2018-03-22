@@ -1,12 +1,11 @@
 package groupapp.cs.psu.slidingpuzzle;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import groupapp.cs.psu.slidingpuzzle.firebase.objects.PlayerScoreInformation;
-import android.os.SystemClock;
-
 public class Math1playerActivity extends AppCompatActivity implements View.OnClickListener,GestureDetector.OnGestureListener {
 
     private Button[][] buttons = new Button[5][5];
@@ -42,7 +38,6 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-    private PlayerScoreInformation playerScoreInformation;
     private TextView Score;
     private int score;
     private Button displayHighScore;
@@ -104,6 +99,11 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
             }
     }
 
+    /**
+     * This method is called on click of
+     * pause button to disable the grid buttons
+     * @param params
+     */
     private void populateGridsOnPause(LinearLayout.LayoutParams params){
         int k = 0;
         for (int i = 0; i < 5; i++)
@@ -112,6 +112,11 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
             }
     }
 
+    /**
+     * This method is called on click of resume button
+     * to activate the grid buttons
+     * @param params
+     */
     private void populateGridsOnResume(LinearLayout.LayoutParams params){
         int k = 0;
         for (int i = 0; i < 5; i++)
@@ -120,6 +125,10 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
             }
     }
 
+    /**
+     * This method renders the UI for Math mode
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +187,6 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
 
 
 
-        //Score.setText("Score: " + score);
         NewLine.addView(Score);
 
         //Timer
@@ -227,23 +235,6 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-
-        LinearLayout NewLine3 = new LinearLayout(this);
-        NewLine3.setOrientation(LinearLayout.HORIZONTAL);
-
-        // Display High Score Button
-        displayHighScore = new Button(this);
-        displayHighScore.setText("Display High Score");
-        displayHighScore.setLayoutParams(params);
-        displayHighScore.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(Math1playerActivity.this, HighScoreActivity.class));
-            }
-        });
-        NewLine3.addView(displayHighScore);
-        page.addView(NewLine3);
-
         // Set it up for use:
         page.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -255,6 +246,11 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    /**
+     * This method is called when the user makes
+     * a move on the grids
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         try{
@@ -282,6 +278,10 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
 
 
 
+
+    /**
+     * Stores the player score in the fire base
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -335,6 +335,14 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         return this.gDetector.onTouchEvent(event);
     }
 
+    /**
+     * Used to detect swipe movements by the user
+     * @param start
+     * @param finish
+     * @param velocityX
+     * @param velocityY
+     * @return
+     */
     @Override
     public boolean onFling(MotionEvent start, MotionEvent finish, float velocityX, float velocityY) {
         int equationResult = -1;
@@ -404,6 +412,12 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         return true;
     }
 
+    /**
+     * Displays success message if the equation result is
+     * correct else gives error message
+     * @param equationResult
+     * @return
+     */
     private boolean handleResult(int equationResult){
         if (equationResult >= 0){
             String equationString = formEquationString();
@@ -425,6 +439,16 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     * Validates the submitted equation to check
+     * if 5 grids are submitted
+     * @param xs
+     * @param ys
+     * @param xf
+     * @param yf
+     * @param direction
+     * @return
+     */
     private int validateEquation(int xs, int ys, int xf, int yf, int direction){
         int returnValue = 1;
         switch(direction) {
@@ -448,6 +472,13 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    /**
+     *
+     * @param viewGroup
+     * @param x
+     * @param y
+     * @return
+     */
     private View findViewAt(LinearLayout viewGroup, int x, int y) {
         for(int i = 0; i < viewGroup.getChildCount(); i++) {
             View child = viewGroup.getChildAt(i);
@@ -468,6 +499,12 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         return null;
     }
 
+    /**
+     * Fetch values from the submitted grids
+     * @param xs
+     * @param ys
+     * @param direction
+     */
     private void getSubmittedButtons(int xs, int ys, int direction){
         int index = 0;
         submittedValues = new Object[5];
@@ -514,6 +551,10 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     * Form an equation in the string format
+     * @return
+     */
     private String formEquationString(){
         String submittedEquation = "";
         for (int i = 0; i < 5; i++){
@@ -522,13 +563,18 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         return submittedEquation;
     }
 
+    /**
+     * Check if the same equation is submitted more than once
+     * @param submittedEquation
+     * @return
+     */
     private boolean checkRepeatedSubmission(String submittedEquation){
         boolean isRepeated = false;
         if(submittedEquation !=null && !submittedEquation.isEmpty() && submittedEquations.size()!=0) {
             for (int i = 0; i < submittedEquations.size(); i++) {
-                    if(submittedEquations.get(i).equals(submittedEquation)){
-                        isRepeated = true;
-                    }
+                if(submittedEquations.get(i).equals(submittedEquation)){
+                    isRepeated = true;
+                }
             }
         }
         return isRepeated;
