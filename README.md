@@ -7,8 +7,9 @@ The application is built on Android SDK version 26. It has an extension to Fireb
 
 Instructions to compile and run:
 1. Download the source code from Github either as zip file or clone to android studio on your local machine.
-2. To compile the code, Tools -> Android -> Sync Project with Gradle Files. Next, Build -> Make project and Run -> Run 'app'.
-3. Deploy to an android device and enjoy the game.  
+2. To compile the code, Tools -> Android -> Sync Project with Gradle Files. 
+3. Next, Build -> Make project and Run -> Run 'app'.
+4. Deploy to an android device and enjoy the game.  
 
 Rereferences:
 1. https://developer.android.com/index.html
