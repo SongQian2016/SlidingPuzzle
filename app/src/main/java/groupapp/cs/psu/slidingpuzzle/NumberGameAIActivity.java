@@ -23,15 +23,13 @@ public class NumberGameAIActivity extends AppCompatActivity {
     public TextView[] tvs = new TextView[N];
     public List<String> textList = new ArrayList<String>();
     private List<List<String>> childrenStates = new ArrayList<>();
-
+    public List<String> tvStrs = new ArrayList<String>(N);
     private List<List<String>> visited = new ArrayList<>();
 
     private int count = 0, preSteps = 0;
-
-    public List<String> tvStrs = new ArrayList<String>(N);
     public ToggleButton pauseBtn;
     private TextView tv_time;
-    //private float dX, dY;
+    private float dX, dY;
 
     private boolean ispaused = false;
     private boolean mstarted;
@@ -43,20 +41,17 @@ public class NumberGameAIActivity extends AppCompatActivity {
     long currenttime=0L;
 
     private Handler mhandler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_game_ai);
 
-        startBtn = (Button) findViewById(R.id.startBt);
+        nextBtn = (Button) findViewById(R.id.nextBt);
         tv_time = (TextView) findViewById(R.id.tv_time);
         startBtn = (Button) findViewById(R.id.startBt);
-        nextBtn = (Button) findViewById(R.id.nextBt);
         pauseBtn = (ToggleButton) findViewById(R.id.pauseBtn);
-
         mhandler = new Handler();
-        // button visibility
+        //button visibility
         nextBtn.setEnabled(false);
         pauseBtn.setEnabled(false);
 
@@ -64,23 +59,18 @@ public class NumberGameAIActivity extends AppCompatActivity {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onClick(View v) {
-
-                // startBtn.setEnabled(false);
+                startBtn.setEnabled(false);
                 pauseBtn.setEnabled(true);
                 nextBtn.setEnabled(true);
-
                 ispaused=false;
-
                 starttimer();
-
                 List<String> visit = new ArrayList<>();
                 for (int i = 0; i < N; i++) {
                     visit.add(" ");
                 }
                 visited.add(visit);
-                init();
-                //initiate();
-
+               // init();
+                initiate();
             }
         });
 
@@ -486,24 +476,3 @@ public class NumberGameAIActivity extends AppCompatActivity {
         }
     };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
