@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 public class Math2playersActivity extends AppCompatActivity {
 
+    /**
+     * This method allows the user to select the mode for multiplayer
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

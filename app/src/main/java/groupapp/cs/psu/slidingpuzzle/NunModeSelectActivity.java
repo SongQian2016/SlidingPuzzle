@@ -10,6 +10,10 @@ public class NunModeSelectActivity extends AppCompatActivity {
 
     public Button button3, button4;
 
+    /**
+     * This method allows the user to select single player or AI mode
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

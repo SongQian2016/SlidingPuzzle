@@ -78,7 +78,7 @@ public class Math1playerActivity extends AppCompatActivity implements View.OnCli
         //Shuffle the list to scatter the values
         Collections.shuffle(gridValues);
 
-        // add the value 10 to replace it with blanl tile
+        // add the value 10 to replace it with blank tile
         gridValues.add(10);
 
     }

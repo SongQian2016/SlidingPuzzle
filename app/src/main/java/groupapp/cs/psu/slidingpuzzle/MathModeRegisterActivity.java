@@ -47,44 +47,40 @@ public class MathModeRegisterActivity extends AppCompatActivity implements View.
         editTextPassword = (EditText) findViewById(R.id.logPassword);
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
 
-
         //Changed
         databaseReference = FirebaseDatabase.getInstance().getReference("player");
         buttonRegister.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
     }
 
+    /**
+     * This method checks if the email or the password is empty and valid and registers the user
+     */
     private void registerUser(){
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
         if(TextUtils.isEmpty(email)){
-            //email is empty
             Toast.makeText(this,"Please enter email", Toast.LENGTH_SHORT).show();
-
-            //Stops any further execution
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            //password is empty
             Toast.makeText(this,"Please enter password",Toast.LENGTH_SHORT).show();
-
-            //Stops further execution
             return;
         }
 
-        //if validations are good so far
-        //We will show a progress dialogue
-
+        //if validations are good so far, display a progress dialog
         progressDialog.setMessage("Registering user...");
         progressDialog.show();
 
+        /**
+         * This method registers the user successfully
+         */
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    //user is successfully registered
                    Toast.makeText(MathModeRegisterActivity.this,"Registered successfully",Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                    addPlayer();
@@ -96,41 +92,19 @@ public class MathModeRegisterActivity extends AppCompatActivity implements View.
         });
     }
 
- /*   private void saveInitialPlayerScore(){
-        int singlePlayerScore = 0;
-
-        //After successful registration of the user, initialize the score of the player to 0
-        PlayerScoreInformation playerInitialScore = new PlayerScoreInformation(singlePlayerScore);
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child(user.getUid()).setValue(playerInitialScore);
-
-        //After score initialization, go to menu options for Math mode so user can start playing
-        finish();
-        progressDialog.dismiss();
-        startActivity(new Intent(getApplicationContext(),MathModeSelectActivity.class));
-    }*/
-
-
+    /**
+     * This method adds the user to firebase
+     */
     private void addPlayer(){
         String email = editTextEmail.getText().toString();
         int initialPlayerScore = 0;
 
         if((!TextUtils.isEmpty(email))){
 
-            //generate unique ID for this user.
-            //String id = databaseReference.push().getKey();
-
             PlayerScoreInformation initialScore = new PlayerScoreInformation(initialPlayerScore, email);
-
-            //To store the player information using id
-            //databaseReference.child(id).setValue(initialScore);
-
             FirebaseUser user = firebaseAuth.getCurrentUser();
 
             databaseReference.child(user.getUid()).setValue(initialScore);
-            //databaseReference.child("players").child(user.getUid()).setValue(initialScore);
-
-            //After score initialization, go to menu options for Math mode so user can start playing
             finish();
             progressDialog.dismiss();
             startActivity(new Intent(getApplicationContext(),MathModeSelectActivity.class));

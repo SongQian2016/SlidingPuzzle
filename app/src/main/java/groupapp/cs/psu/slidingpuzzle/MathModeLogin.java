@@ -10,6 +10,10 @@ import android.widget.EditText;
 public class MathModeLogin extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
+    /**
+     * This method logs in the user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,6 @@ public class MathModeLogin extends AppCompatActivity {
                 EditText username= (EditText) findViewById(R.id.logUser);
                 String message = username.getText().toString();
                 intent.putExtra(EXTRA_MESSAGE, message);
-
                 startActivity(intent);
             }
         });

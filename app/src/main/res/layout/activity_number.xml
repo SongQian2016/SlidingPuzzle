@@ -19,45 +19,20 @@
             android:layout_marginBottom="15dp"
             >
 
-            <EditText
-                android:id="@+id/tv_time"
+            <Chronometer
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="textPersonName"
-                android:layout_margin="@dimen/Margin"
-                android:text="00:00:00"
-                android:textSize="15dp"/>
-
-            <Button
-                android:id="@+id/startBt"
-                android:layout_width="@dimen/timerButtonSize"
-                android:layout_height="@dimen/timerButtonSize"
-                android:text="Start"
-                android:textSize="12dp"
-                android:layout_margin="@dimen/Margin"
-                />
-
-            <ToggleButton
-                android:layout_width="@dimen/timerButtonSize"
-                android:layout_height="@dimen/timerButtonSize"
-                android:textOff="Pause"
-                android:textSize="12dp"
-                android:textOn="Play"
-                android:id="@+id/pauseBtn"
-                android:layout_margin="@dimen/Margin"
+                android:id="@+id/chronometer"
                 />
 
             <Button
-                android:id="@+id/exitBt"
                 android:layout_width="@dimen/timerButtonSize"
                 android:layout_height="@dimen/timerButtonSize"
-                android:text="Exit"
+                android:text="P"
                 android:textSize="12dp"
+                android:id="@+id/pausebutton"
                 android:layout_margin="@dimen/Margin"
-
                 />
-
         </LinearLayout>
 
         <GridLayout
@@ -306,17 +281,10 @@
                 android:layout_height="@dimen/buttonHeight"
                 android:layout_width="@dimen/buttonWidth"
                 android:id="@+id/newGameBtn"
-                android:text="Restart"
+                android:text="Shuffle"
                 android:textSize="10dp"
                 android:layout_margin="@dimen/Margin"/>
 
-            <Button
-                android:id="@+id/gotoMenuBtn"
-                android:layout_width="@dimen/buttonWidth"
-                android:layout_height="@dimen/buttonHeight"
-                android:text="Home"
-                android:textSize="10dp"
-                android:layout_margin="@dimen/Margin"/>
         </LinearLayout>
 
     </LinearLayout>

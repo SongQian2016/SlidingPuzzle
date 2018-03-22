@@ -8,8 +8,12 @@ import android.widget.Button;
 
 public class MathModeSelectActivity extends AppCompatActivity {
 
-    public Button button1, button2, button3;
+    public Button button1, button2;
 
+    /**
+     * This method allow the user to select single player or multiplayer for math mode
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -42,7 +42,6 @@ public class HighScoreActivity extends AppCompatActivity {
         highScoreLayout = (LinearLayout) findViewById(R.id.high_score_cl);
         highScoreList = (ListView) findViewById(R.id.listDisplayScore);
 
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -53,29 +52,25 @@ public class HighScoreActivity extends AppCompatActivity {
                 }
 
                 Collections.sort(playerScores);
-                //populateHighScoreList();
                 CustomAdapter customAdapter = new CustomAdapter();
                 highScoreList.setAdapter(customAdapter);
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-
-
-
     }
 
+    /**
+     * This method displays 5 users and their high scores
+     */
     private void populateHighScoreList() {
 
-        //if playerScores list contains 5 or more than 5 items, display only top 5
         if (playerScores.size() >= 5) {
             for (int i = 0; i < 5; i++) {
                 System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
                 highScore[i] = new TextView(this);
-                //highScore[i].setLayoutParams(params);
                 highScore[i].setText(playerScores.get(i).getEmail() + "  : " + playerScores.get(i).getSinglePlayerScore());
                 highScoreLayout.addView(highScore[i]);
             }
@@ -83,7 +78,6 @@ public class HighScoreActivity extends AppCompatActivity {
             for (int i = 0; i < playerScores.size(); i++) {
                 System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
                 highScore[i] = new TextView(this);
-                //highScore[i].setLayoutParams(params);
                 highScore[i].setText(playerScores.get(i).getEmail() + "  : " + playerScores.get(i).getSinglePlayerScore());
                 highScoreLayout.addView(highScore[i]);
             }

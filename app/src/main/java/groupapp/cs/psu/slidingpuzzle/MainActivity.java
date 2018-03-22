@@ -10,6 +10,10 @@ public class MainActivity extends AppCompatActivity {
 
     public Button startbtn;
 
+    /**
+     * This method starts a new activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

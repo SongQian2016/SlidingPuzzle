@@ -1,18 +1,15 @@
 package groupapp.cs.psu.slidingpuzzle;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,24 +17,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-
 public class NumberActivity extends AppCompatActivity {
 
+    private Chronometer math_timer;
+    private long lastpause;
+    public Button pauseBtn;
+
     Numbers nums;
-    public Button startBtn, exitBtn;
-    public ToggleButton pauseBtn;
-    private TextView tv_time;
-    private boolean ispaused = false;
-    private boolean mstarted;
-
-    long starttime=0L;
-    long timeSwap = 0L;
-    long finalTime = 0L;
-    long millis=0L;
-    long currenttime=0L;
-
-    private Handler mhandler;
-
     private TextView steps;
     private int numbSteps;
     private TextView history;
@@ -57,7 +43,31 @@ public class NumberActivity extends AppCompatActivity {
             R.drawable.n15, R.drawable.n16, R.drawable.n17, R.drawable.n18, R.drawable.n19,
             R.drawable.n20, R.drawable.n21, R.drawable.n22, R.drawable.n23, R.drawable.n24};
 
+    /*
+    Generate buttons on pause
+     */
+    private void genbuttonsonpause(){
+        button = new ImageButton[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                button[i][j] = (ImageButton) this.findViewById(BUTTONS[i][j]);
+                button[i][j].setOnClickListener(null);
+            }
+        }
+    }
 
+    /*
+    generate buttons on resume
+     */
+    private void genbuttonsonresume(){
+        button = new ImageButton[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                button[i][j] = (ImageButton) this.findViewById(BUTTONS[i][j]);
+                button[i][j].setOnClickListener(onClickListener);
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,60 +81,42 @@ public class NumberActivity extends AppCompatActivity {
             }
         }
 
-        startBtn = (Button) findViewById(R.id.startBt);
-        tv_time = (TextView) findViewById(R.id.tv_time);
-        exitBtn = (Button) findViewById(R.id.exitBt);
-        pauseBtn = (ToggleButton) findViewById(R.id.pauseBtn);
+        // pause button and chronometer
+        pauseBtn=(Button)findViewById(R.id.pausebutton);
+        math_timer = findViewById(R.id.chronometer);
+        math_timer.start();
 
-        mhandler = new Handler();
-        // button visibility
-        exitBtn.setEnabled(false);
-        pauseBtn.setEnabled(false);
-
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public void onClick(View v) {
-                startBtn.setEnabled(false);
-                pauseBtn.setEnabled(true);
-                exitBtn.setEnabled(true);
-
-                ispaused=false;
-
-                starttimer();
-
-            }
-        });
-
+        /**
+         * This method shows the functionality of pause and resume
+         */
         pauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                pausetimer();
-            }
-        });
-
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pausetimer();
-                tv_time.setText("00:00:00");
-                goBackHome();
-            }
-            private void goBackHome() {
-                Intent intent = new Intent(NumberActivity.this, NunModeSelectActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                String pausetext = pauseBtn.getText().toString();
+                if(pausetext.equals("P")){
+                    pauseBtn.setText("R");
+                    lastpause = SystemClock.elapsedRealtime();
+                    math_timer.stop();
+                    genbuttonsonpause();
+                }
+                else{
+                    pauseBtn.setText("P");
+                    math_timer.setBase(math_timer.getBase()+ SystemClock.elapsedRealtime()-lastpause);
+                    math_timer.start();
+                    genbuttonsonresume();
+                }
             }
         });
 
         Button newGameBtn = (Button) this.findViewById(R.id.newGameBtn);
         newGameBtn.setOnClickListener(onClickListener);
-        Button bMBtn = (Button) this.findViewById(R.id.gotoMenuBtn);
-        bMBtn.setOnClickListener(onClickListener);
+
         Typeface digitalFont = Typeface.createFromAsset(this.getAssets(), "myFont.ttf");
         TextView mySteps = (TextView) this.findViewById(R.id.steps);
         mySteps.setTypeface(digitalFont);
         steps = (TextView) this.findViewById(R.id.step);
         steps.setTypeface(digitalFont);
+
         TextView myHistory = (TextView) this.findViewById(R.id.historys);
         myHistory.setTypeface(digitalFont);
         history = (TextView) this.findViewById(R.id.history);
@@ -156,9 +148,6 @@ public class NumberActivity extends AppCompatActivity {
                 case R.id.newGameBtn:
                     newGame();
                     break;
-                case R.id.gotoMenuBtn:
-                    gotoMenu();
-                    break;
                 default:
                     break;
             }
@@ -173,43 +162,6 @@ public class NumberActivity extends AppCompatActivity {
             checkResult();
         }
     }
-
-    private void starttimer() {
-        mstarted=true;
-        starttime= SystemClock.uptimeMillis();
-        mhandler.postDelayed(mrunnable,10L); //10
-    }
-
-    private void pausetimer() {
-        if(pauseBtn.isChecked()) {
-            ispaused=true;
-            mstarted=false;
-            mhandler.removeCallbacks(mrunnable);
-            currenttime = SystemClock.uptimeMillis() - starttime;
-
-        }
-        else
-        {
-            ispaused=false;
-            mstarted=true;
-            starttime = SystemClock.uptimeMillis() - currenttime;
-            mhandler.postAtTime(mrunnable,0L);
-
-        }
-    }
-
-    private final Runnable mrunnable = new Runnable() {
-        @Override
-        public void run() {
-            if(mstarted) {
-                millis = (SystemClock.uptimeMillis() - starttime);
-                finalTime = timeSwap + millis;
-                long seconds = finalTime / 1000;
-                tv_time.setText(String.format("%02d:%02d:%02d",seconds/60,seconds%60,millis%100));//100
-                mhandler.postDelayed(mrunnable,millis/10L);//10
-            }
-        }
-    };
 
     public void newGame() {
         nums.getNewNumbers();
@@ -237,14 +189,6 @@ public class NumberActivity extends AppCompatActivity {
         check = false;
     }
 
-    public void gotoMenu() {
-        saveValueBoard();
-        Intent intent = new Intent(NumberActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-        finish();
-    }
-
     private void saveValueBoard() {
         String text = "";
         for(int i = 0; i < N; i++) {
@@ -266,7 +210,6 @@ public class NumberActivity extends AppCompatActivity {
                 button[i][j].setImageResource(NUMS[nums.getValueBoard(i, j)]);
             }
         }
-
     }
 
     public void checkResult(){

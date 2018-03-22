@@ -1,17 +1,15 @@
 package groupapp.cs.psu.slidingpuzzle.firebase.objects;
 
-
-// This class helps to store data on firebase
 public class PlayerScoreInformation implements Comparable {
 
     public int singlePlayerScore;
-
     public String email;
 
-    PlayerScoreInformation(){
-
-    }
-
+    /**
+     * This method stores the player email and score on firebase
+     * @param singlePlayerScore
+     * @param email
+     */
     public PlayerScoreInformation(int singlePlayerScore, String email) {
         this.singlePlayerScore = singlePlayerScore;
         this.email = email;
@@ -23,6 +21,13 @@ public class PlayerScoreInformation implements Comparable {
         return email;
     }
 
+    /**
+     * This method compares the individual player scores.
+     * Displays themn in sorted order.
+     * Also used to identify user for a new high score
+     * @param comparePlayer
+     * @return
+     */
     @Override
     public int compareTo(Object comparePlayer) {
         int compareScore=((PlayerScoreInformation)comparePlayer).getSinglePlayerScore();

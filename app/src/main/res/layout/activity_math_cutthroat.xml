@@ -5,7 +5,7 @@
     android:id="@+id/mathCutthrough"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="groupapp.cs.psu.slidingpuzzle.MathCutthroughActivity">
+    tools:context="groupapp.cs.psu.slidingpuzzle.MathCutthroatActivity">
 
     <TextView
         android:id="@+id/textView6"

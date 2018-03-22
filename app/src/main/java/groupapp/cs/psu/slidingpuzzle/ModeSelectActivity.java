@@ -10,6 +10,10 @@ public class ModeSelectActivity  extends AppCompatActivity{
 
     public Button numBtn, mathBtn, backBtn;
 
+    /**
+     *This method allows the user to select math mode or number mode game
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modeselection);

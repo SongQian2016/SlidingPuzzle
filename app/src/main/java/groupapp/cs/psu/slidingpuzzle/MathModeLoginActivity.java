@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MathModeLoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-
     private Button buttonSignIn;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -43,28 +42,24 @@ public class MathModeLoginActivity extends AppCompatActivity implements View.OnC
         textViewSignup.setOnClickListener(this);
     }
 
+    /**
+     * This method checks if the email or the password text is empty or valid
+     */
     private void userLogin(){
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
-            //email is empty
             Toast.makeText(this,"Please enter email", Toast.LENGTH_SHORT).show();
-
-            //Stops any further execution
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            //password is empty
             Toast.makeText(this,"Please enter password",Toast.LENGTH_SHORT).show();
-
-            //Stops further execution
             return;
         }
 
-        //if validations are good so far
-        //We will show a progress dialogue
+        //if validations are good so far, display a progress dialog
 
         progressDialog.setMessage("Logging in...");
         progressDialog.show();
