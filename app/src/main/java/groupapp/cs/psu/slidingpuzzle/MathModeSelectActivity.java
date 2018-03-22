@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MathModeSelectActivity extends AppCompatActivity {
 
-    public Button button1, button2;
+    public Button button1, button2, button3;
 
     /**
      * This method allow the user to select single player or multiplayer for math mode
@@ -21,6 +21,7 @@ public class MathModeSelectActivity extends AppCompatActivity {
 
         button1 = (Button) findViewById(R.id.singleplayerbutton);
         button2 = (Button) findViewById(R.id.multiplayerbutton);
+        button3 = (Button) findViewById(R.id.highscorebutton);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,17 @@ public class MathModeSelectActivity extends AppCompatActivity {
             }
             private void open2() {
                 Intent intent = new Intent(MathModeSelectActivity.this, Math2playersActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open3();
+            }
+            private void open3() {
+                Intent intent = new Intent(MathModeSelectActivity.this, HighScoreActivity.class);
                 startActivity(intent);
             }
         });

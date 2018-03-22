@@ -30,6 +30,7 @@ public class HighScoreActivity extends AppCompatActivity {
     private TextView[] highScore = new TextView[5];
     private LinearLayout highScoreLayout;
     private ListView highScoreList;
+    private  List<PlayerScoreInformation> topPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class HighScoreActivity extends AppCompatActivity {
                 }
 
                 Collections.sort(playerScores);
+                topPlayers = new ArrayList<PlayerScoreInformation>(playerScores.subList(0, Math.min(playerScores.size(), 5)));
                 CustomAdapter customAdapter = new CustomAdapter();
                 highScoreList.setAdapter(customAdapter);
             }
@@ -60,6 +62,9 @@ public class HighScoreActivity extends AppCompatActivity {
 
             }
         });
+
+
+
     }
 
     /**
@@ -67,16 +72,15 @@ public class HighScoreActivity extends AppCompatActivity {
      */
     private void populateHighScoreList() {
 
+        //if playerScores list contains 5 or more than 5 items, display only top 5
         if (playerScores.size() >= 5) {
             for (int i = 0; i < 5; i++) {
-                System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
                 highScore[i] = new TextView(this);
                 highScore[i].setText(playerScores.get(i).getEmail() + "  : " + playerScores.get(i).getSinglePlayerScore());
                 highScoreLayout.addView(highScore[i]);
             }
         } else {
             for (int i = 0; i < playerScores.size(); i++) {
-                System.out.println("Player Scores:" + playerScores.get(i).getSinglePlayerScore());
                 highScore[i] = new TextView(this);
                 highScore[i].setText(playerScores.get(i).getEmail() + "  : " + playerScores.get(i).getSinglePlayerScore());
                 highScoreLayout.addView(highScore[i]);
@@ -88,7 +92,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return playerScores.size();
+            return topPlayers.size();
         }
 
         @Override
@@ -106,8 +110,8 @@ public class HighScoreActivity extends AppCompatActivity {
             convertView = getLayoutInflater().inflate(R.layout.highscorelayout,null);
             TextView textView_email = (TextView) convertView.findViewById(R.id.textView_email);
             TextView textView_score = (TextView) convertView.findViewById(R.id.textView_score);
-            textView_email.setText(playerScores.get(position).getEmail());
-            textView_score.setText(String.valueOf(playerScores.get(position).getSinglePlayerScore()));
+            textView_email.setText(topPlayers.get(position).getEmail());
+            textView_score.setText(String.valueOf(topPlayers.get(position).getSinglePlayerScore()));
 
             return convertView;
         }
